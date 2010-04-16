@@ -32,29 +32,25 @@ module ResourceController
           index.wants.html
           edit.wants.html
           new_action.wants.html
-
           show do
             wants.html
-
-            failure.wants.html { render :text => "Member object not found." }
+            failure.wants.html { render :text => I18n.t('resource_controller.messages.object_not_found', :default => "Member object not found.") }
           end
 
           create do
-            flash "Successfully created!"
+            flash I18n.t('resource_controller.messages.successfully_created', :default => "Successfully created!")
             wants.html { redirect_to object_url }
-
             failure.wants.html { render :action => "new" }
           end
 
           update do
-            flash "Successfully updated!"
+            flash I18n.t('resource_controller.messages.successfully_updated', :default => "Successfully updated!")                        
             wants.html { redirect_to object_url }
-
             failure.wants.html { render :action => "edit" }
           end
 
           destroy do
-            flash "Successfully removed!"
+            flash I18n.t('resource_controller.messages.successfully_removed', :default => "Successfully removed!")
             wants.html { redirect_to collection_url }
             failure.wants.html { redirect_to object_url }
           end
