@@ -8,13 +8,22 @@ module ResourceController
           model_name.to_s.camelize.constantize
         end
 
-  
+        # Override this method for return false if you dont want use paginate
+        def use_paginate
+          Gem.available?('will_paginate')
+        end
+        
+        
         # Used to fetch the collection for the index method
         #
         # In order to customize the way the collection is fetched, to add something like pagination, for example, override this method.
         #
         def collection
-          end_of_association_chain.find(:all)
+          if (use_paginate)
+            end_of_association_chain.paginate :page => params[:page], :order => 'created_at DESC'
+          else  
+            end_of_association_chain.find(:all)
+          end          
         end
     
         # Returns the current param.
